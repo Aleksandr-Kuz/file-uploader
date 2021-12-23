@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Validator;
+use App\Services\FileUploader;
 
 
 class UploaderPdfFilesController extends BaseController
@@ -22,8 +23,7 @@ class UploaderPdfFilesController extends BaseController
 
         $urlUploadedFiles  = [];
         foreach ($request->file() as $key => $file) {
-            // TODO сделать загрузку файлов на s3
-            $urlUploadedFiles[$key] = '';
+            $urlUploadedFiles[$key] = FileUploader::upload($file);
         }
 
         return response()->json($urlUploadedFiles);
